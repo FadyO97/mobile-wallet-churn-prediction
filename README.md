@@ -19,19 +19,19 @@ An end-to-end analytics platform built to monitor digital wallet churn, evaluate
 
 Tracks high-level KPI performance across the customer lifecycle, featuring MoM churn rate trajectories aligned against account maturity cohorts and geographic default distribution across Egyptian governorates (Giza, Cairo, Alexandria, Asyut, Gharbia).
 
-![Executive Overview](Executive Summary.jpg)
+![Executive Overview](dashboard/Executive Overview.png)
 
 ### 2. Churn & Inactivity Analytics
 
 Analyzes the drivers behind customer churn (47.8%) by cross-referencing recency vs. monthly transaction volumes sized by predicted churn probability. Includes predictive risk segmentation breakdown (`High Risk`, `Medium Risk`, `Low Risk`) by individual wallet IDs.
 
-![Churn Analytics](Churn & Inactivity Analytics.png)
+![Churn Analytics](dashboard/Churn & Inactivity Analytics.png)
 
 ### 3. Credit Risk & Default Monitoring
 
 Monitors credit performance by mapping actual default rates against target thresholds. Highlights risk concentration using decomposition trees across regions (Giza showing peak default rates at 0.7%) and loan amount brackets (e.g., 500K EGP micro-loans displaying 1.3% default rate).
 
-![Credit Risk Monitoring](Credit Risk & Default Monitoring.png)
+![Credit Risk Monitoring](dashboard/Credit Risk & Default Monitoring.png)
 
 ---
 
