@@ -1,0 +1,42 @@
+-- Create Staging Table and Risk Summary View
+CREATE VIEW vw_user_risk_profile AS
+WITH rfm_base AS (
+    SELECT 
+        user_id,
+        governorate,
+        wallet_type,
+        account_age_days,
+        days_since_last_txn AS recency_days,
+        (avg_monthly_p2p_transfers + avg_monthly_bill_payments) AS monthly_txn_frequency,
+        loan_amount_egp,
+        failed_trans_last_30d,
+        is_churned,
+        is_defaulted
+    FROM mobile_wallet_users
+),
+risk_scoring AS (
+    SELECT 
+        *,
+        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
+        NTILE(5) OVER (ORDER BY monthly_txn_frequency ASC) AS frequency_score,
+        CASE 
+            WHEN failed_trans_last_30d >= 4 THEN 'High Risk'
+            WHEN failed_trans_last_30d BETWEEN 1 AND 3 THEN 'Medium Risk'
+            ELSE 'Low Risk'
+        END AS transaction_risk_tier
+    FROM rfm_base
+)
+SELECT 
+    user_id,
+    governorate,
+    wallet_type,
+    account_age_days,
+    recency_days,
+    monthly_txn_frequency,
+    loan_amount_egp,
+    failed_trans_last_30d,
+    transaction_risk_tier,
+    is_churned,
+    is_defaulted,
+    (recency_score + frequency_score) AS composite_churn_indicator
+FROM risk_scoring;
